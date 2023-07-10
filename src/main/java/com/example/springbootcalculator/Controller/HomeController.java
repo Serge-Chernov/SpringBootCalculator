@@ -16,13 +16,12 @@ import org.springframework.web.servlet.ModelAndView;
 @RequestMapping("/")
 public class HomeController {
     @GetMapping("/calc")
-    public ModelAndView calc(ModelAndView modelAndView) {
-        modelAndView.setViewName("newOp");
-        modelAndView.addObject(new Operation());
-        return modelAndView;
+    public String calc(Model model) {
+        model.addAttribute("newOp", new Operation());
+        return "calculator";
     }
     @PostMapping("/calc")
-    public String calc(@ModelAttribute("newOp") @Valid Operation operation, BindingResult bindingResult, Model model){
+    public String calc(@ModelAttribute("newOp") @Valid Operation operation, BindingResult bindingResult){
         if (bindingResult.hasErrors()){
             return "calculator";
         }
